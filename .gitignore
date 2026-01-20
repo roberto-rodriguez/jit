@@ -1,0 +1,14 @@
+# Node
+jit/frontend/node_modules/
+
+# Maven
+jit/target/
+
+# Optional (recommended)
+jit/**/target/
+
+# OS / IDE noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

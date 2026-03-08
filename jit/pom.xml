@@ -78,7 +78,7 @@
     <!-- Build -->
     <!-- ================================================= -->
     <build>
-        <finalName>jit</finalName>
+        <finalName>ROOT</finalName>
 
         <plugins>
             <plugin>
@@ -88,6 +88,55 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+            <!--       
+                        <plugin>
+                            <groupId>com.github.eirslett</groupId>
+                            <artifactId>frontend-maven-plugin</artifactId>
+                            <version>1.15.0</version>
+            
+                            <configuration>
+                                <workingDirectory>frontend</workingDirectory>
+                            </configuration>
+            
+                            <executions>
+            
+                               
+                                <execution>
+                                    <id>install-node-and-npm</id>
+                                    <goals>
+                                        <goal>install-node-and-npm</goal>
+                                    </goals>
+                                    <configuration>
+                                        <nodeVersion>v20.11.1</nodeVersion>
+                                        <npmVersion>10.2.4</npmVersion>
+                                    </configuration>
+                                </execution>
+            
+                           
+                                <execution>
+                                    <id>npm-install</id>
+                                    <goals>
+                                        <goal>npm</goal>
+                                    </goals>
+                                    <configuration>
+                                        <arguments>install</arguments>
+                                    </configuration>
+                                </execution>
+            
+                             
+                                <execution>
+                                    <id>npm-build</id>
+                                    <goals>
+                                        <goal>npm</goal>
+                                    </goals>
+                                    <configuration>
+                                        <arguments>run build</arguments>
+                                    </configuration>
+                                </execution>
+            
+                            </executions>
+                        </plugin>
+            -->
         </plugins>
     </build>
 </project>

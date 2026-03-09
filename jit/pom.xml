@@ -21,11 +21,11 @@
     <!-- Application Coordinates -->
     <!-- ================================================= -->
     <groupId>com.jit</groupId>
-    <artifactId>jit-web</artifactId>
+    <artifactId>jit-app</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
 
-    <name>JIT Web</name>
+    <name>JIT App</name>
     <description>Single-page JSP application with email service</description>
 
     <!-- ================================================= -->

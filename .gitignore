@@ -12,3 +12,4 @@ jit/**/target/
 Thumbs.db
 .idea/
 .vscode/
+/jit_app/target/

@@ -13,9 +13,10 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Java version
+      - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
@@ -32,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/ROOT.war'
+          path: ${{ github.workspace }}/target/ROOT.war
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,20 +48,20 @@ jobs:
         with:
           name: java-app
           path: artifact
-  
+
       - name: Show downloaded files
-         run: |
+        run: |
           pwd
           ls -lah
           ls -lah artifact
-  
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6C47329319ED47DEB11949F9862D4FA4 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6A2401C9BA44924A8EC0F3526D88135 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_462EB03EDDB14D35B53F085BB045E201 }}
-  
+
       - name: Deploy WAR to Azure App Service
         uses: azure/cli@v2
         with:

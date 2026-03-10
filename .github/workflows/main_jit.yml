@@ -9,9 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,7 +23,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: java-app
@@ -40,7 +37,7 @@ jobs:
       contents: read
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: java-app
@@ -52,17 +49,20 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6A2401C9BA44924A8EC0F3526D88135 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_462EB03EDDB14D35B53F085BB045E201 }}
 
-      - name: Pre-deployment Cleanup
+      - name: Hard Reset and Cleanup
         uses: azure/cli@v2
         with:
           inlineScript: |
-            # Remove the default hostingstart and the stray app.war that are blocking the root
-            az webapp deployment source config-zip --resource-group jit --name jit --src /dev/null --clear
+            # 1. Force the app to use a longer timeout (1800 seconds)
+            az webapp config appsettings set --resource-group jit --name jit --settings WEBSITES_CONTAINER_START_TIME_LIMIT=1800
             
+            # 2. Delete ALL files in wwwroot to prevent 'app.war' ghosting
+            # This is more effective than manual Kudu deletion
+            az webapp deployment source config-zip --resource-group jit --name jit --src /dev/null --clear
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'jit'
           package: 'ROOT.war'
-          # target-path ensures it goes into the Tomcat webapps directory
-          target-path: 'webapps'
+          target-path: 'webapps' # Crucial: puts it in site/wwwroot/webapps/ROOT.war

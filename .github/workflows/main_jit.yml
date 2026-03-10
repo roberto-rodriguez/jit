@@ -26,14 +26,11 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      - name: Verify WAR exists
-        run: ls -lah target
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: ${{ github.workspace }}/target/ROOT.war
+          path: target/ROOT.war
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,13 +44,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-app
-          path: artifact
-
-      - name: Show downloaded files
-        run: |
-          pwd
-          ls -lah
-          ls -lah artifact
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -62,19 +52,8 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6A2401C9BA44924A8EC0F3526D88135 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_462EB03EDDB14D35B53F085BB045E201 }}
 
-      - name: Deploy WAR to Azure App Service
-        uses: azure/cli@v2
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
         with:
-          inlineScript: |
-            set -eux
-            az account show
-            pwd
-            ls -lah
-            ls -lah artifact
-            test -f artifact/ROOT.war
-            az webapp deploy \
-              --resource-group jit \
-              --name jit \
-              --src-path artifact/ROOT.war \
-              --restart true \
-              --clean true
+          app-name: 'jit'
+          package: 'ROOT.war'

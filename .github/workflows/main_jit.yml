@@ -66,12 +66,15 @@ jobs:
         uses: azure/cli@v2
         with:
           inlineScript: |
-            set -euxo pipefail
+            set -eux
             az account show
+            pwd
+            ls -lah
             ls -lah artifact
             test -f artifact/ROOT.war
             az webapp deploy \
               --resource-group jit \
               --name jit \
               --src-path artifact/ROOT.war \
-              --type war
+              --restart true \
+              --clean true

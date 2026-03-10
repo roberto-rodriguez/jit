@@ -57,10 +57,12 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6A2401C9BA44924A8EC0F3526D88135 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_462EB03EDDB14D35B53F085BB045E201 }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+      - name: Deploy WAR to Azure App Service
+        uses: azure/cli@v2
         with:
-          app-name: 'jit'
-          slot-name: 'Production'
-          package: 'ROOT.war'
+          inlineScript: |
+            az webapp deploy \
+              --resource-group jit \
+              --name jit \
+              --src-path ROOT.war \
+              --type war

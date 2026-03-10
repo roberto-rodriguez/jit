@@ -52,8 +52,17 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6A2401C9BA44924A8EC0F3526D88135 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_462EB03EDDB14D35B53F085BB045E201 }}
 
+      - name: Pre-deployment Cleanup
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            # Remove the default hostingstart and the stray app.war that are blocking the root
+            az webapp deployment source config-zip --resource-group jit --name jit --src /dev/null --clear
+            
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'jit'
           package: 'ROOT.war'
+          # target-path ensures it goes into the Tomcat webapps directory
+          target-path: 'webapps'

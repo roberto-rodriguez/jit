@@ -11,3 +11,6 @@ Thumbs.db
 .vscode/
 /jit_app/target/
 /target/
+
+# Frontend
+frontend/node_modules/

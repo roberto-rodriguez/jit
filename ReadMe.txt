@@ -1,6 +1,6 @@
 Project structure
 - Java/Spring web app output path remains: jit/src/main/webapp
-- Frontend source (Node + Vite + Tailwind toolchain): jit/frontend
+- Frontend source (Node + Vite toolchain): jit/frontend
 
 Frontend workflow
 1) Install dependencies

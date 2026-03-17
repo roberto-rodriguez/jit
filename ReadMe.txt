@@ -11,8 +11,8 @@ Notes
 - If a frontend pipeline is needed again in the future, it can be reintroduced,
   but today there is no required npm build step.
   
-  
-  To run in Azure, run command:
+  1- Navigate to /target
+  2- To run in Azure, run command:
   az webapp deploy --resource-group DefaultResourceGroup-EUS  --name jit  --src-path target/ROOT.war  --track-status true
   
   http://jit-fdg5f2dvbeexhhbz.canadacentral-01.azurewebsites.net

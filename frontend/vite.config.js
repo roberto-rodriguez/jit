@@ -9,6 +9,7 @@ export default defineConfig({
   },
   build: {
     outDir: resolve(__dirname, '../src/main/webapp'),
-    emptyOutDir: true
+    emptyOutDir: true,
+    copyPublicDir: false
   }
 });

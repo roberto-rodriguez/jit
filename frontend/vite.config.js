@@ -1,6 +1,7 @@
-import { defineConfig } from 'vite';
+import { defineConfig, searchForWorkspaceRoot } from 'vite';
 import { resolve } from 'path';
 
+const frontendDir = __dirname;
 const webappDir = resolve(__dirname, '../src/main/webapp');
 
 export default defineConfig({
@@ -9,7 +10,7 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     fs: {
-      allow: [webappDir]
+      allow: [searchForWorkspaceRoot(process.cwd()), frontendDir, webappDir]
     }
   },
   build: {

@@ -21,6 +21,7 @@ What build/dev does
 
 Spring/Tomcat packaging
 - After frontend build, package/deploy with Maven as usual.
+- This project currently uses Spring Boot 3.2.3, which requires a Jakarta-compatible external container (Tomcat 10.1+). Deploying the WAR to Tomcat 9 or older will not start the Spring app.
 
 Deployment reference
 1- Navigate to /target

@@ -1,15 +1,20 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
+const webappDir = resolve(__dirname, '../src/main/webapp');
+
 export default defineConfig({
-  publicDir: resolve(__dirname, '../src/main/webapp'),
+  publicDir: webappDir,
   server: {
     port: 5173,
-    strictPort: true
+    strictPort: true,
+    fs: {
+      allow: [webappDir]
+    }
   },
   build: {
-    outDir: resolve(__dirname, '../src/main/webapp'),
-    emptyOutDir: true,
+    outDir: webappDir,
+    emptyOutDir: false,
     copyPublicDir: false
   }
 });
